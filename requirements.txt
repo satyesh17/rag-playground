@@ -1,0 +1,12 @@
+# Core RAG components
+qdrant-client>=1.15.0
+sentence-transformers>=3.3.0
+datasets>=3.2.0
+
+# Utilities
+python-dotenv>=1.0.0
+pydantic>=2.9.0
+tqdm>=4.66.0
+
+# Testing (dev, but keep here for simplicity)
+pytest>=8.0

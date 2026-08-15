@@ -1,0 +1,25 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
+
+# Secrets
+.env
+.env*
+
+# Data
+data/*.jsonl
+data/*.parquet
+data/downloaded/
+
+# Qdrant local storage
+qdrant_storage/
+
+# OS
+.DS_Store
