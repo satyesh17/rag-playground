@@ -140,3 +140,75 @@ That's where real differentiation will emerge.
 
 - Day 10: hybrid search (BM25 + dense) with Cohere reranking
 - Day 11: RAGAS evals in CI with fail-build gates
+
+---
+
+# Day 10 — Hybrid Search + Reranking (with adversarial golden set)
+
+## Setup
+
+- **Corpus:** 480 Wikipedia articles, 28,151 fixed-size chunks
+- **Embedding model:** MiniLM (all-MiniLM-L6-v2)
+- **BM25:** rank-bm25, tokenized on words, lowercase
+- **Hybrid fusion:** Reciprocal Rank Fusion (k=60)
+- **Reranker:** BAAI/bge-reranker-v2-m3 (cross-encoder)
+- **Golden set:** 14 adversarial questions across 6 categories designed to break dense-only retrieval
+
+## Results
+
+| Approach | R@1 | R@3 | R@5 | R@10 | Latency (median) |
+|---|---|---|---|---|---|
+| Dense (MiniLM) | 0.50 | 0.60 | 0.73 | 0.80 | 20ms |
+| BM25 | 0.57 | 0.71 | 0.86 | 0.86 | 52ms |
+| Hybrid (RRF) | 0.71 | 0.71 | 0.79 | 0.93 | 74ms |
+| Hybrid + Rerank | 0.71 | 0.86 | 0.93 | 1.00 | 961ms |
+
+## Key Findings
+
+### 1. Complementary retrievers → RRF captures the ceiling
+
+Dense and BM25 failed on different questions (5 both hit, 2 dense-only, 3 BM25-only, 4 both missed). RRF captured every complementary win — hitting exactly the theoretical ceiling of 0.71 at R@1.
+
+**Lesson:** verify complementarity before assuming hybrid helps. If your retrievers fail on the same questions, hybrid ≈ average of both.
+
+### 2. Reranking helps recall, NOT precision (at K=1)
+
+Reranking pushed R@5 from 0.79 → 0.93 and R@10 from 0.93 → 1.00. But R@1 stayed at 0.71 — same as hybrid alone.
+
+**Why:** cross-encoder rerankers score by query-chunk topical similarity, not by whether the chunk contains the answer. When the query's most distinctive keyword (e.g., "Aristotle") appears in a WRONG-but-topically-similar article, reranking often reinforces that mistake.
+
+**Concrete example:** query "Where did Aristotle's most famous student wage military campaigns?" retrieves an Aristotle chunk discussing his relationship with Alexander. The reranker scores this HIGHER than the Alexander article, because it satisfies both "Aristotle" (query subject) and "campaigns" (query activity). Technically correct semantic overlap. Functionally wrong answer.
+
+### 3. Latency cost is brutal for the R@1 case
+
+13x slower (74ms → 961ms) for zero R@1 improvement. For downstream LLMs using top-5 context, reranking's R@5 gain (0.79 → 0.93) justifies the cost. For top-1 systems, gains are illusory.
+
+## The Four Remaining Failures Reveal Structural Limits
+
+Even with hybrid + rerank, R@1 caps at 0.71. The four remaining misses share a pattern: **the query's surface keywords match a wrong-but-adjacent article better than the right one.**
+
+- Aristotle's student → keyword "Aristotle" > answer "Alexander"
+- E=mc² → formula tokens > physicist name
+- 4th century BCE conqueror → period keywords > specific person
+- Union general baseball myth → Civil War context > individual name
+
+These require capabilities beyond retrieval+rerank:
+- **Query rewriting** (LLM rewrites "Aristotle's student" → "Alexander the Great")
+- **Answer scoring** (rerank based on answer-containment, not topical relevance)
+- **Multi-step agentic retrieval** (evaluate results, refine query, retry)
+
+Day 13 (agentic RAG) will target these.
+
+## Production Implications
+
+- **Encyclopedic corpus + top-5 LLM context:** hybrid + rerank is worth 900ms
+- **Encyclopedic corpus + top-1 (chat, cost-sensitive):** hybrid alone is nearly as good, 13x faster
+- **Domain corpus (legal, medical, technical):** must re-run this comparison; keyword density differs
+
+## Content
+
+The story of Day 10 is not "reranking wins." It's:
+1. Verify retriever complementarity empirically before building hybrid
+2. Reranking's benefit is at K=3+, not K=1
+3. Both retrieval and rerank optimize topical similarity; when questions require answer-containment reasoning, both fail together
+4. That failure mode is why agentic RAG exists
