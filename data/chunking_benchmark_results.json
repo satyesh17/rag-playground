@@ -1,0 +1,1594 @@
+{
+  "fixed": {
+    "summary": {
+      "strategy": "fixed",
+      "description": "Fixed-size 500 char with 50 char overlap",
+      "collection": "day9_fixed",
+      "n_questions": 15,
+      "recall_at_k": {
+        "1": 1.0,
+        "3": 1.0,
+        "5": 1.0,
+        "10": 1.0
+      },
+      "latency_ms": {
+        "median": 19.21370904892683,
+        "min": 13.166458113119006,
+        "max": 382.92200001887977
+      }
+    },
+    "per_question": [
+      {
+        "question": "What is the anarchist political philosophy?",
+        "expected": [
+          "Anarchism"
+        ],
+        "retrieved_titles": [
+          "Anarchism",
+          "Anarchism",
+          "Anarchism",
+          "Anarchism",
+          "Anarcho-capitalism",
+          "Anarcho-capitalism",
+          "Anarcho-capitalism",
+          "Anarchism",
+          "Anarchism",
+          "Anarchism"
+        ],
+        "latency_ms": 382.92200001887977,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What was Aristotle's contribution to philosophy?",
+        "expected": [
+          "Aristotle"
+        ],
+        "retrieved_titles": [
+          "Aristotle",
+          "Aristotle",
+          "Aristotle",
+          "Aristotle",
+          "Aristotle",
+          "Aristotle",
+          "Aristotle",
+          "Aristotle",
+          "Aristotle",
+          "Aristotle"
+        ],
+        "latency_ms": 25.228624930605292,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What is the history of Athens?",
+        "expected": [
+          "Athens",
+          "History of Athens"
+        ],
+        "retrieved_titles": [
+          "Athens",
+          "Agesilaus II",
+          "Athens",
+          "Athens",
+          "Athens",
+          "Athens",
+          "Athens",
+          "Agesilaus II",
+          "Apollo",
+          "Athens"
+        ],
+        "latency_ms": 26.659084018319845,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "Who was Alexander the Great and what did he conquer?",
+        "expected": [
+          "Alexander the Great"
+        ],
+        "retrieved_titles": [
+          "Alexander the Great",
+          "Alexander the Great",
+          "Aegean Sea",
+          "Anatolia",
+          "Alexander the Great",
+          "Ankara",
+          "Alexander the Great",
+          "Alexander the Great",
+          "Alexander the Great",
+          "Alexander the Great"
+        ],
+        "latency_ms": 28.97450001910329,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What is Einstein's theory of relativity?",
+        "expected": [
+          "Albert Einstein",
+          "Theory of relativity"
+        ],
+        "retrieved_titles": [
+          "Albert Einstein",
+          "Albert Einstein",
+          "Albert Einstein",
+          "Albert Einstein",
+          "Albert Einstein",
+          "Albert Einstein",
+          "Albert Einstein",
+          "Albert Einstein",
+          "Albert Einstein",
+          "Albert Einstein"
+        ],
+        "latency_ms": 14.198541874065995,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What was Jonathan Swift's A Modest Proposal about?",
+        "expected": [
+          "A Modest Proposal"
+        ],
+        "retrieved_titles": [
+          "A Modest Proposal",
+          "A Modest Proposal",
+          "A Modest Proposal",
+          "A Modest Proposal",
+          "A Modest Proposal",
+          "A Modest Proposal",
+          "A Modest Proposal",
+          "A Modest Proposal",
+          "A Modest Proposal",
+          "A Modest Proposal"
+        ],
+        "latency_ms": 19.21370904892683,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "Who invented baseball and what role did Abner Doubleday play?",
+        "expected": [
+          "Abner Doubleday"
+        ],
+        "retrieved_titles": [
+          "Abner Doubleday",
+          "Abner Doubleday",
+          "Abner Doubleday",
+          "Abner Doubleday",
+          "Abner Doubleday",
+          "Abner Doubleday",
+          "Abner Doubleday",
+          "Abner Doubleday",
+          "Abner Doubleday",
+          "August 13"
+        ],
+        "latency_ms": 32.18491701409221,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What causes the American Civil War?",
+        "expected": [
+          "American Civil War"
+        ],
+        "retrieved_titles": [
+          "American Civil War",
+          "American Civil War",
+          "American Civil War",
+          "American Civil War",
+          "American Civil War",
+          "American Civil War",
+          "American Civil War",
+          "American Civil War",
+          "American Civil War",
+          "American Civil War"
+        ],
+        "latency_ms": 13.166458113119006,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What is anime and how does Japanese animation differ from Western?",
+        "expected": [
+          "Anime"
+        ],
+        "retrieved_titles": [
+          "Anime",
+          "Anime",
+          "Anime",
+          "Anime",
+          "Anime",
+          "Anime",
+          "Anime",
+          "Anime",
+          "Anime",
+          "Animation"
+        ],
+        "latency_ms": 23.91570806503296,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "How is the ampere defined as a unit of electric current?",
+        "expected": [
+          "Ampere"
+        ],
+        "retrieved_titles": [
+          "Ampere",
+          "Ampere",
+          "Ampere",
+          "Ampere",
+          "Ampere",
+          "Ampere",
+          "Ampere",
+          "Ampere",
+          "Ampere",
+          "Ampere"
+        ],
+        "latency_ms": 17.923207953572273,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What is altruism in behavioral biology?",
+        "expected": [
+          "Altruism"
+        ],
+        "retrieved_titles": [
+          "Altruism",
+          "Altruism",
+          "Altruism",
+          "Altruism",
+          "Altruism",
+          "Altruism",
+          "Altruism",
+          "Altruism",
+          "Altruism",
+          "Altruism"
+        ],
+        "latency_ms": 14.145708875730634,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "Who was the chess player Anatoly Karpov?",
+        "expected": [
+          "Anatoly Karpov"
+        ],
+        "retrieved_titles": [
+          "Anatoly Karpov",
+          "Anatoly Karpov",
+          "Anatoly Karpov",
+          "Anatoly Karpov",
+          "Anatoly Karpov",
+          "Anatoly Karpov",
+          "Anatoly Karpov",
+          "Anatoly Karpov",
+          "Anatoly Karpov",
+          "Anatoly Karpov"
+        ],
+        "latency_ms": 18.003333127126098,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What is an alloy and how are they made?",
+        "expected": [
+          "Alloy"
+        ],
+        "retrieved_titles": [
+          "Alloy",
+          "Alloy",
+          "Alloy",
+          "Alloy",
+          "Alloy",
+          "Alloy",
+          "Alloy",
+          "Alloy",
+          "Alloy",
+          "Alloy"
+        ],
+        "latency_ms": 26.019792072474957,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What is the geography of Alabama?",
+        "expected": [
+          "Geography of Alabama"
+        ],
+        "retrieved_titles": [
+          "Geography of Alabama",
+          "Geography of Alabama",
+          "Alabama",
+          "Alabama",
+          "Alabama",
+          "Alabama",
+          "Alabama",
+          "Alabama",
+          "Geography of Alabama",
+          "Alabama"
+        ],
+        "latency_ms": 15.145542100071907,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What is International Atomic Time and how is it measured?",
+        "expected": [
+          "International Atomic Time"
+        ],
+        "retrieved_titles": [
+          "International Atomic Time",
+          "International Atomic Time",
+          "International Atomic Time",
+          "International Atomic Time",
+          "International Atomic Time",
+          "International Atomic Time",
+          "International Atomic Time",
+          "International Atomic Time",
+          "International Atomic Time",
+          "International Atomic Time"
+        ],
+        "latency_ms": 16.00308297201991,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      }
+    ]
+  },
+  "recursive": {
+    "summary": {
+      "strategy": "recursive",
+      "description": "Recursive character splitting on paragraph/sentence/word",
+      "collection": "day9_recursive",
+      "n_questions": 15,
+      "recall_at_k": {
+        "1": 1.0,
+        "3": 1.0,
+        "5": 1.0,
+        "10": 1.0
+      },
+      "latency_ms": {
+        "median": 31.215541996061802,
+        "min": 16.103707952424884,
+        "max": 339.8189169820398
+      }
+    },
+    "per_question": [
+      {
+        "question": "What is the anarchist political philosophy?",
+        "expected": [
+          "Anarchism"
+        ],
+        "retrieved_titles": [
+          "Anarchism",
+          "Anarchism",
+          "Anarchism",
+          "Anarchism",
+          "Anarcho-capitalism",
+          "Anarcho-capitalism",
+          "Anarchism",
+          "Anarcho-capitalism",
+          "Anarchism",
+          "Anarchism"
+        ],
+        "latency_ms": 339.8189169820398,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What was Aristotle's contribution to philosophy?",
+        "expected": [
+          "Aristotle"
+        ],
+        "retrieved_titles": [
+          "Aristotle",
+          "Avicenna",
+          "Aristotle",
+          "Aristotle",
+          "Aristotle",
+          "Aristotle",
+          "Aristotle",
+          "Aristotle",
+          "Aristotle",
+          "Aristotle"
+        ],
+        "latency_ms": 123.39854100719094,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What is the history of Athens?",
+        "expected": [
+          "Athens",
+          "History of Athens"
+        ],
+        "retrieved_titles": [
+          "Athens",
+          "Athens",
+          "Athens",
+          "Athens",
+          "Acropolis",
+          "Athens",
+          "Athens",
+          "Agamemnon",
+          "Agesilaus II",
+          "Athens"
+        ],
+        "latency_ms": 58.13558306545019,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "Who was Alexander the Great and what did he conquer?",
+        "expected": [
+          "Alexander the Great"
+        ],
+        "retrieved_titles": [
+          "Alexander the Great",
+          "Alexander the Great",
+          "Alexander the Great",
+          "Agesilaus II",
+          "Alexander the Great",
+          "Alexander the Great",
+          "Alexander the Great",
+          "Alexander the Great",
+          "Alexander the Great",
+          "Alexander the Great"
+        ],
+        "latency_ms": 46.14587500691414,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What is Einstein's theory of relativity?",
+        "expected": [
+          "Albert Einstein",
+          "Theory of relativity"
+        ],
+        "retrieved_titles": [
+          "Albert Einstein",
+          "Albert Einstein",
+          "Albert Einstein",
+          "Albert Einstein",
+          "Albert Einstein",
+          "Albert Einstein",
+          "Albert Einstein",
+          "Albert Einstein",
+          "Albert Einstein",
+          "Albert Einstein"
+        ],
+        "latency_ms": 40.64383311197162,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What was Jonathan Swift's A Modest Proposal about?",
+        "expected": [
+          "A Modest Proposal"
+        ],
+        "retrieved_titles": [
+          "A Modest Proposal",
+          "A Modest Proposal",
+          "A Modest Proposal",
+          "A Modest Proposal",
+          "A Modest Proposal",
+          "A Modest Proposal",
+          "A Modest Proposal",
+          "A Modest Proposal",
+          "A Modest Proposal",
+          "A Modest Proposal"
+        ],
+        "latency_ms": 37.409374956041574,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "Who invented baseball and what role did Abner Doubleday play?",
+        "expected": [
+          "Abner Doubleday"
+        ],
+        "retrieved_titles": [
+          "Abner Doubleday",
+          "Abner Doubleday",
+          "Abner Doubleday",
+          "Abner Doubleday",
+          "Abner Doubleday",
+          "Alfred Lawson",
+          "Abner Doubleday",
+          "Abner Doubleday",
+          "Abner Doubleday",
+          "Abner Doubleday"
+        ],
+        "latency_ms": 35.99429200403392,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What causes the American Civil War?",
+        "expected": [
+          "American Civil War"
+        ],
+        "retrieved_titles": [
+          "American Civil War",
+          "American Civil War",
+          "American Civil War",
+          "American Civil War",
+          "American Civil War",
+          "American Civil War",
+          "American Civil War",
+          "American Civil War",
+          "American Civil War",
+          "Abraham Lincoln"
+        ],
+        "latency_ms": 27.207459090277553,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What is anime and how does Japanese animation differ from Western?",
+        "expected": [
+          "Anime"
+        ],
+        "retrieved_titles": [
+          "Anime",
+          "Anime",
+          "Anime",
+          "Anime",
+          "Anime",
+          "Anime",
+          "Anime",
+          "Anime",
+          "Anime",
+          "Anime"
+        ],
+        "latency_ms": 31.215541996061802,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "How is the ampere defined as a unit of electric current?",
+        "expected": [
+          "Ampere"
+        ],
+        "retrieved_titles": [
+          "Ampere",
+          "Ampere",
+          "Ampere",
+          "Ampere",
+          "Ampere",
+          "Ampere",
+          "Ampere",
+          "Ampere",
+          "Andr\u00e9-Marie Amp\u00e8re",
+          "Ampere"
+        ],
+        "latency_ms": 26.652792003005743,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What is altruism in behavioral biology?",
+        "expected": [
+          "Altruism"
+        ],
+        "retrieved_titles": [
+          "Altruism",
+          "Altruism",
+          "Altruism",
+          "Altruism",
+          "Altruism",
+          "Altruism",
+          "Altruism",
+          "Altruism",
+          "Altruism",
+          "Altruism"
+        ],
+        "latency_ms": 17.521666130051017,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "Who was the chess player Anatoly Karpov?",
+        "expected": [
+          "Anatoly Karpov"
+        ],
+        "retrieved_titles": [
+          "Anatoly Karpov",
+          "Anatoly Karpov",
+          "Anatoly Karpov",
+          "Anatoly Karpov",
+          "Anatoly Karpov",
+          "Anatoly Karpov",
+          "Anatoly Karpov",
+          "Anatoly Karpov",
+          "Anatoly Karpov",
+          "Anatoly Karpov"
+        ],
+        "latency_ms": 20.137625047937036,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What is an alloy and how are they made?",
+        "expected": [
+          "Alloy"
+        ],
+        "retrieved_titles": [
+          "Alloy",
+          "Alloy",
+          "Alloy",
+          "Alloy",
+          "Alloy",
+          "Alloy",
+          "Alloy",
+          "Alloy",
+          "Alloy",
+          "Alloy"
+        ],
+        "latency_ms": 18.565583042800426,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What is the geography of Alabama?",
+        "expected": [
+          "Geography of Alabama"
+        ],
+        "retrieved_titles": [
+          "Geography of Alabama",
+          "Alabama",
+          "Alabama",
+          "Alabama",
+          "Alabama",
+          "Alabama",
+          "Alabama",
+          "Alabama",
+          "Alabama River",
+          "Geography of Alabama"
+        ],
+        "latency_ms": 18.086125142872334,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What is International Atomic Time and how is it measured?",
+        "expected": [
+          "International Atomic Time"
+        ],
+        "retrieved_titles": [
+          "International Atomic Time",
+          "International Atomic Time",
+          "International Atomic Time",
+          "International Atomic Time",
+          "International Atomic Time",
+          "International Atomic Time",
+          "International Atomic Time",
+          "International Atomic Time",
+          "International Atomic Time",
+          "International Atomic Time"
+        ],
+        "latency_ms": 16.103707952424884,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      }
+    ]
+  },
+  "sentence": {
+    "summary": {
+      "strategy": "sentence",
+      "description": "5 sentences per chunk, 1 sentence overlap",
+      "collection": "day9_sentence",
+      "n_questions": 15,
+      "recall_at_k": {
+        "1": 1.0,
+        "3": 1.0,
+        "5": 1.0,
+        "10": 1.0
+      },
+      "latency_ms": {
+        "median": 16.9279589317739,
+        "min": 14.182999962940812,
+        "max": 20.575375063344836
+      }
+    },
+    "per_question": [
+      {
+        "question": "What is the anarchist political philosophy?",
+        "expected": [
+          "Anarchism"
+        ],
+        "retrieved_titles": [
+          "Anarchism",
+          "Anarchism",
+          "Anarchism",
+          "Anarchism",
+          "Anarchism",
+          "Anarchism",
+          "Anarchism",
+          "Anarchism",
+          "Anarchism",
+          "Anarcho-capitalism"
+        ],
+        "latency_ms": 20.00854117795825,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What was Aristotle's contribution to philosophy?",
+        "expected": [
+          "Aristotle"
+        ],
+        "retrieved_titles": [
+          "Aristotle",
+          "Aristotle",
+          "Aristotle",
+          "Aristotle",
+          "Aristotle",
+          "Aristotle",
+          "Aristotle",
+          "Aristotle",
+          "Aristotle",
+          "Aristotle"
+        ],
+        "latency_ms": 15.199832851067185,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What is the history of Athens?",
+        "expected": [
+          "Athens",
+          "History of Athens"
+        ],
+        "retrieved_titles": [
+          "Athens",
+          "Athens",
+          "Athens",
+          "Athens",
+          "Agesilaus II",
+          "Athens",
+          "Athens",
+          "Athens",
+          "Acropolis",
+          "Athens"
+        ],
+        "latency_ms": 15.196209074929357,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "Who was Alexander the Great and what did he conquer?",
+        "expected": [
+          "Alexander the Great"
+        ],
+        "retrieved_titles": [
+          "Alexander the Great",
+          "Alexander the Great",
+          "Alexander the Great",
+          "Alexander the Great",
+          "Aegean Sea",
+          "Alexander the Great",
+          "Alexander the Great",
+          "Alexander the Great",
+          "Alexander the Great",
+          "Alexander the Great"
+        ],
+        "latency_ms": 15.334124909713864,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What is Einstein's theory of relativity?",
+        "expected": [
+          "Albert Einstein",
+          "Theory of relativity"
+        ],
+        "retrieved_titles": [
+          "Albert Einstein",
+          "Albert Einstein",
+          "Albert Einstein",
+          "Albert Einstein",
+          "Albert Einstein",
+          "Albert Einstein",
+          "Albert Einstein",
+          "Albert Einstein",
+          "Albert Einstein",
+          "Albert Einstein"
+        ],
+        "latency_ms": 14.935916988179088,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What was Jonathan Swift's A Modest Proposal about?",
+        "expected": [
+          "A Modest Proposal"
+        ],
+        "retrieved_titles": [
+          "A Modest Proposal",
+          "A Modest Proposal",
+          "A Modest Proposal",
+          "A Modest Proposal",
+          "A Modest Proposal",
+          "A Modest Proposal",
+          "A Modest Proposal",
+          "A Modest Proposal",
+          "A Modest Proposal",
+          "A Modest Proposal"
+        ],
+        "latency_ms": 17.059125006198883,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "Who invented baseball and what role did Abner Doubleday play?",
+        "expected": [
+          "Abner Doubleday"
+        ],
+        "retrieved_titles": [
+          "Abner Doubleday",
+          "Abner Doubleday",
+          "Abner Doubleday",
+          "Abner Doubleday",
+          "Abner Doubleday",
+          "Abner Doubleday",
+          "August 13",
+          "Abner Doubleday",
+          "Abner Doubleday",
+          "April 26"
+        ],
+        "latency_ms": 18.612083978950977,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What causes the American Civil War?",
+        "expected": [
+          "American Civil War"
+        ],
+        "retrieved_titles": [
+          "American Civil War",
+          "American Civil War",
+          "American Civil War",
+          "American Civil War",
+          "American Civil War",
+          "American Civil War",
+          "American Civil War",
+          "American Civil War",
+          "American Civil War",
+          "American Civil War"
+        ],
+        "latency_ms": 20.575375063344836,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What is anime and how does Japanese animation differ from Western?",
+        "expected": [
+          "Anime"
+        ],
+        "retrieved_titles": [
+          "Anime",
+          "Anime",
+          "Anime",
+          "Anime",
+          "Anime",
+          "Anime",
+          "Anime",
+          "Anime",
+          "Anime",
+          "Anime"
+        ],
+        "latency_ms": 19.12004197947681,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "How is the ampere defined as a unit of electric current?",
+        "expected": [
+          "Ampere"
+        ],
+        "retrieved_titles": [
+          "Ampere",
+          "Ampere",
+          "Ampere",
+          "Ampere",
+          "Ampere",
+          "Ampere",
+          "Ampere",
+          "Andr\u00e9-Marie Amp\u00e8re",
+          "Ampere",
+          "Ampere"
+        ],
+        "latency_ms": 17.986166989430785,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What is altruism in behavioral biology?",
+        "expected": [
+          "Altruism"
+        ],
+        "retrieved_titles": [
+          "Altruism",
+          "Altruism",
+          "Altruism",
+          "Altruism",
+          "Altruism",
+          "Altruism",
+          "Altruism",
+          "Altruism",
+          "Altruism",
+          "Altruism"
+        ],
+        "latency_ms": 16.2559999153018,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "Who was the chess player Anatoly Karpov?",
+        "expected": [
+          "Anatoly Karpov"
+        ],
+        "retrieved_titles": [
+          "Anatoly Karpov",
+          "Anatoly Karpov",
+          "Anatoly Karpov",
+          "Anatoly Karpov",
+          "Anatoly Karpov",
+          "Anatoly Karpov",
+          "Anatoly Karpov",
+          "Anatoly Karpov",
+          "Anatoly Karpov",
+          "Anatoly Karpov"
+        ],
+        "latency_ms": 16.9279589317739,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What is an alloy and how are they made?",
+        "expected": [
+          "Alloy"
+        ],
+        "retrieved_titles": [
+          "Alloy",
+          "Alloy",
+          "Alloy",
+          "Alloy",
+          "Alloy",
+          "Aluminium",
+          "Alloy",
+          "Alloy",
+          "Alloy",
+          "Alloy"
+        ],
+        "latency_ms": 15.289583941921592,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What is the geography of Alabama?",
+        "expected": [
+          "Geography of Alabama"
+        ],
+        "retrieved_titles": [
+          "Geography of Alabama",
+          "Alabama",
+          "Alabama",
+          "Alabama",
+          "Alabama",
+          "Alabama",
+          "Alabama River",
+          "Alabama",
+          "Geography of Alabama",
+          "Alabama"
+        ],
+        "latency_ms": 14.182999962940812,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What is International Atomic Time and how is it measured?",
+        "expected": [
+          "International Atomic Time"
+        ],
+        "retrieved_titles": [
+          "International Atomic Time",
+          "International Atomic Time",
+          "International Atomic Time",
+          "International Atomic Time",
+          "International Atomic Time",
+          "International Atomic Time",
+          "International Atomic Time",
+          "International Atomic Time",
+          "International Atomic Time",
+          "Atomic physics"
+        ],
+        "latency_ms": 18.415499944239855,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      }
+    ]
+  },
+  "paragraph": {
+    "summary": {
+      "strategy": "paragraph",
+      "description": "2 paragraphs per chunk, no overlap",
+      "collection": "day9_paragraph",
+      "n_questions": 15,
+      "recall_at_k": {
+        "1": 1.0,
+        "3": 1.0,
+        "5": 1.0,
+        "10": 1.0
+      },
+      "latency_ms": {
+        "median": 17.25941593758762,
+        "min": 11.918124975636601,
+        "max": 20.22854215465486
+      }
+    },
+    "per_question": [
+      {
+        "question": "What is the anarchist political philosophy?",
+        "expected": [
+          "Anarchism"
+        ],
+        "retrieved_titles": [
+          "Anarchism",
+          "Anarchism",
+          "Anarchism",
+          "Anarchism",
+          "Anarcho-capitalism",
+          "Anarchism",
+          "Anarcho-capitalism",
+          "Anarcho-capitalism",
+          "Anarchism",
+          "Anarchism"
+        ],
+        "latency_ms": 20.22854215465486,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What was Aristotle's contribution to philosophy?",
+        "expected": [
+          "Aristotle"
+        ],
+        "retrieved_titles": [
+          "Aristotle",
+          "Aristotle",
+          "Aristotle",
+          "Aristotle",
+          "Aristotle",
+          "Aristotle",
+          "Aristotle",
+          "Aristotle",
+          "Aristotle",
+          "Aristotle"
+        ],
+        "latency_ms": 11.918124975636601,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What is the history of Athens?",
+        "expected": [
+          "Athens",
+          "History of Athens"
+        ],
+        "retrieved_titles": [
+          "Athens",
+          "Athens",
+          "Athens",
+          "Agesilaus II",
+          "Athens",
+          "Athens",
+          "Athens",
+          "Aegean Sea",
+          "Athens",
+          "Athens"
+        ],
+        "latency_ms": 13.586875051259995,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "Who was Alexander the Great and what did he conquer?",
+        "expected": [
+          "Alexander the Great"
+        ],
+        "retrieved_titles": [
+          "Alexander the Great",
+          "Alexander the Great",
+          "Alexander the Great",
+          "Alexander the Great",
+          "Alexander the Great",
+          "Alexander the Great",
+          "Alexander the Great",
+          "Alexander the Great",
+          "Alexander the Great",
+          "Alexander the Great"
+        ],
+        "latency_ms": 17.395749920979142,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What is Einstein's theory of relativity?",
+        "expected": [
+          "Albert Einstein",
+          "Theory of relativity"
+        ],
+        "retrieved_titles": [
+          "Albert Einstein",
+          "Albert Einstein",
+          "Albert Einstein",
+          "Albert Einstein",
+          "Albert Einstein",
+          "Albert Einstein",
+          "Albert Einstein",
+          "Albert Einstein",
+          "Albert Einstein",
+          "Albert Einstein"
+        ],
+        "latency_ms": 17.298416001722217,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What was Jonathan Swift's A Modest Proposal about?",
+        "expected": [
+          "A Modest Proposal"
+        ],
+        "retrieved_titles": [
+          "A Modest Proposal",
+          "A Modest Proposal",
+          "A Modest Proposal",
+          "A Modest Proposal",
+          "A Modest Proposal",
+          "A Modest Proposal",
+          "A Modest Proposal",
+          "A Modest Proposal",
+          "A Modest Proposal",
+          "A Modest Proposal"
+        ],
+        "latency_ms": 19.520125119015574,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "Who invented baseball and what role did Abner Doubleday play?",
+        "expected": [
+          "Abner Doubleday"
+        ],
+        "retrieved_titles": [
+          "Abner Doubleday",
+          "Abner Doubleday",
+          "Abner Doubleday",
+          "Abner Doubleday",
+          "Abner Doubleday",
+          "Alfred Lawson",
+          "Abner Doubleday",
+          "Abner Doubleday",
+          "Abner Doubleday",
+          "Abner Doubleday"
+        ],
+        "latency_ms": 18.48933403380215,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What causes the American Civil War?",
+        "expected": [
+          "American Civil War"
+        ],
+        "retrieved_titles": [
+          "American Civil War",
+          "American Civil War",
+          "American Civil War",
+          "American Civil War",
+          "American Civil War",
+          "American Civil War",
+          "American Civil War",
+          "American Civil War",
+          "American Civil War",
+          "American Civil War"
+        ],
+        "latency_ms": 19.523708848282695,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What is anime and how does Japanese animation differ from Western?",
+        "expected": [
+          "Anime"
+        ],
+        "retrieved_titles": [
+          "Anime",
+          "Anime",
+          "Anime",
+          "Anime",
+          "Anime",
+          "Anime",
+          "Anime",
+          "Anime",
+          "Anime",
+          "Animation"
+        ],
+        "latency_ms": 16.882624942809343,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "How is the ampere defined as a unit of electric current?",
+        "expected": [
+          "Ampere"
+        ],
+        "retrieved_titles": [
+          "Ampere",
+          "Ampere",
+          "Ampere",
+          "Ampere",
+          "Ampere",
+          "Ampere",
+          "Ampere",
+          "Ampere",
+          "Andr\u00e9-Marie Amp\u00e8re",
+          "Ampere"
+        ],
+        "latency_ms": 17.34795793890953,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What is altruism in behavioral biology?",
+        "expected": [
+          "Altruism"
+        ],
+        "retrieved_titles": [
+          "Altruism",
+          "Altruism",
+          "Altruism",
+          "Altruism",
+          "Altruism",
+          "Altruism",
+          "Altruism",
+          "Altruism",
+          "Altruism",
+          "Altruism"
+        ],
+        "latency_ms": 16.264208126813173,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "Who was the chess player Anatoly Karpov?",
+        "expected": [
+          "Anatoly Karpov"
+        ],
+        "retrieved_titles": [
+          "Anatoly Karpov",
+          "Anatoly Karpov",
+          "Anatoly Karpov",
+          "Anatoly Karpov",
+          "Anatoly Karpov",
+          "Anatoly Karpov",
+          "Anatoly Karpov",
+          "Anatoly Karpov",
+          "Anatoly Karpov",
+          "Anatoly Karpov"
+        ],
+        "latency_ms": 17.25941593758762,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What is an alloy and how are they made?",
+        "expected": [
+          "Alloy"
+        ],
+        "retrieved_titles": [
+          "Alloy",
+          "Alloy",
+          "Alloy",
+          "Alloy",
+          "Alloy",
+          "Alloy",
+          "Alloy",
+          "Alloy",
+          "Alloy",
+          "Aluminium"
+        ],
+        "latency_ms": 15.077749965712428,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What is the geography of Alabama?",
+        "expected": [
+          "Geography of Alabama"
+        ],
+        "retrieved_titles": [
+          "Geography of Alabama",
+          "Alabama",
+          "Geography of Alabama",
+          "Alabama",
+          "Alabama River",
+          "Alabama",
+          "Alabama",
+          "Alabama River",
+          "Alabama",
+          "Alabama"
+        ],
+        "latency_ms": 12.087834067642689,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      },
+      {
+        "question": "What is International Atomic Time and how is it measured?",
+        "expected": [
+          "International Atomic Time"
+        ],
+        "retrieved_titles": [
+          "International Atomic Time",
+          "International Atomic Time",
+          "International Atomic Time",
+          "International Atomic Time",
+          "International Atomic Time",
+          "International Atomic Time",
+          "International Atomic Time",
+          "Atomic physics",
+          "Astronomical unit",
+          "International Atomic Time"
+        ],
+        "latency_ms": 14.151041861623526,
+        "hits_at_k": {
+          "1": true,
+          "3": true,
+          "5": true,
+          "10": true
+        }
+      }
+    ]
+  }
+}

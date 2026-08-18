@@ -1,10 +1,15 @@
 """
 Embed chunks and load them into Qdrant.
 
-Each embedding model gets its own collection because vectors from
-different models are incompatible (different dimensions AND different spaces).
+Supports two use cases:
+- Day 8: benchmark embedding models (one strategy, multiple models)
+- Day 9: benchmark chunking strategies (one model, multiple strategies)
 
-Collections are named: "wiki_<model_short_name>"
+Collections are named to reflect what's inside:
+- "wiki_minilm" — Day 8 collection, MiniLM model, fixed chunking
+- "wiki_bge_large" — Day 8 collection, BGE-large model, fixed chunking
+- "day9_fixed" / "day9_recursive" / "day9_sentence" / "day9_paragraph"
+  — Day 9 collections, MiniLM model, varying chunking
 """
 import uuid
 from dataclasses import asdict
@@ -17,7 +22,7 @@ from src.rag_playground.chunker import Chunk
 from src.rag_playground.db import get_client
 
 
-# Configuration for each embedding model we'll benchmark
+# Day 8 config — kept for backward compat
 EMBEDDING_MODELS = {
     "minilm": {
         "hf_id": "sentence-transformers/all-MiniLM-L6-v2",
@@ -36,82 +41,111 @@ def load_model(model_key: str) -> SentenceTransformer:
     """Load a sentence-transformers model by our short key."""
     cfg = EMBEDDING_MODELS[model_key]
     print(f"Loading {cfg['hf_id']} (dim={cfg['dim']})...")
-    # First call downloads the model; subsequent calls use HF cache
     return SentenceTransformer(cfg["hf_id"])
 
 
-def create_collection(model_key: str) -> None:
-    """Create (or recreate) the Qdrant collection for this model."""
-    cfg = EMBEDDING_MODELS[model_key]
+def create_named_collection(collection_name: str, dim: int) -> None:
+    """Create (or recreate) a Qdrant collection with the given name and dim."""
     client = get_client()
-
-    # If the collection already exists, delete and recreate.
-    # Fresh state = no confusion during benchmarking.
-    if client.collection_exists(cfg["collection"]):
-        client.delete_collection(cfg["collection"])
-        print(f"Deleted existing collection: {cfg['collection']}")
-
+    if client.collection_exists(collection_name):
+        client.delete_collection(collection_name)
+        print(f"Deleted existing collection: {collection_name}")
     client.create_collection(
-        collection_name=cfg["collection"],
-        vectors_config=VectorParams(
-            size=cfg["dim"],
-            distance=Distance.COSINE,   # Cosine similarity, as discussed
-        ),
+        collection_name=collection_name,
+        vectors_config=VectorParams(size=dim, distance=Distance.COSINE),
     )
-    print(f"Created collection: {cfg['collection']} (dim={cfg['dim']})")
+    print(f"Created collection: {collection_name} (dim={dim})")
 
 
-def index_chunks(
-    model_key: str,
+def index_chunks_into(
+    collection_name: str,
     chunks: list[Chunk],
+    model: SentenceTransformer,
     batch_size: int = 64,
 ) -> None:
-    """Embed and upsert chunks into Qdrant."""
-    cfg = EMBEDDING_MODELS[model_key]
-    model = load_model(model_key)
+    """Embed and upsert chunks into a specific Qdrant collection."""
     client = get_client()
 
-    print(f"Indexing {len(chunks)} chunks with {model_key}...")
-
-    for i in tqdm(range(0, len(chunks), batch_size), desc=f"Batches ({model_key})"):
+    for i in tqdm(range(0, len(chunks), batch_size), desc=f"Indexing {collection_name}"):
         batch = chunks[i:i + batch_size]
         texts = [c.text for c in batch]
 
-        # Embed in one batched call — much faster than one-at-a-time
-        vectors = model.encode(texts, normalize_embeddings=True, show_progress_bar=False)
+        vectors = model.encode(
+            texts,
+            normalize_embeddings=True,
+            show_progress_bar=False,
+        )
 
         points = []
         for chunk, vector in zip(batch, vectors, strict=True):
             points.append(PointStruct(
-                # Qdrant needs a UUID or int for the point ID.
-                # We hash the chunk_id to get a deterministic UUID.
                 id=str(uuid.uuid5(uuid.NAMESPACE_URL, chunk.chunk_id)),
                 vector=vector.tolist(),
-                payload=asdict(chunk),  # Store the whole chunk as metadata
+                payload=asdict(chunk),
             ))
 
-        client.upsert(collection_name=cfg["collection"], points=points)
+        client.upsert(collection_name=collection_name, points=points)
 
-    # Verify by counting
-    count = client.count(cfg["collection"], exact=True).count
-    print(f"Indexed {count} vectors in {cfg['collection']}")
+    count = client.count(collection_name, exact=True).count
+    print(f"  → {count} vectors in {collection_name}")
 
 
-if __name__ == "__main__":
-    # Load the corpus and chunk it
+# ============================================================================
+# DAY 8 MODE — index full corpus with each model, fixed chunking
+# ============================================================================
+
+def day8_index_all_models() -> None:
+    """Day 8 flow: full corpus, fixed chunking, two models."""
     import json
+    from src.rag_playground.chunker import chunk_corpus_with_strategy
 
     with open("data/corpus.jsonl") as f:
         records = [json.loads(line) for line in f]
 
-    from src.rag_playground.chunker import chunk_corpus
-    chunks = chunk_corpus(records)
+    chunks = chunk_corpus_with_strategy(records, "fixed")
     print(f"Total chunks: {len(chunks)}")
 
-    # Index with both models
     for model_key in ["minilm", "bge_large"]:
-        print(f"\n{'=' * 60}")
-        print(f"Indexing with: {model_key}")
-        print("=" * 60)
-        create_collection(model_key)
-        index_chunks(model_key, chunks)
+        cfg = EMBEDDING_MODELS[model_key]
+        create_named_collection(cfg["collection"], cfg["dim"])
+        model = load_model(model_key)
+        index_chunks_into(cfg["collection"], chunks, model)
+
+
+# ============================================================================
+# DAY 9 MODE — sample corpus, MiniLM, four chunking strategies
+# ============================================================================
+
+def day9_index_all_strategies(n_articles: int = 10000) -> None:
+    """Day 9 flow: sample of corpus, MiniLM, all 4 chunking strategies."""
+    import json
+    import random
+    from src.rag_playground.chunker import chunk_corpus_with_strategy, CHUNKING_STRATEGIES
+
+    with open("data/corpus.jsonl") as f:
+        records = [json.loads(line) for line in f]
+
+    # Use a deterministic sample so results are reproducible
+    random.seed(42)
+    sampled = random.sample(records, min(n_articles, len(records)))
+    print(f"Sampled {len(sampled)} articles from {len(records)} total\n")
+
+    # Load MiniLM once — we'll use it for every strategy
+    minilm = load_model("minilm")
+    minilm_dim = EMBEDDING_MODELS["minilm"]["dim"]
+
+    for strategy in CHUNKING_STRATEGIES:
+        chunks = chunk_corpus_with_strategy(sampled, strategy)
+        collection = f"day9_{strategy}"
+        print(f"\n=== Strategy: {strategy} — {len(chunks)} chunks ===")
+        create_named_collection(collection, minilm_dim)
+        index_chunks_into(collection, chunks, minilm)
+
+
+if __name__ == "__main__":
+    import sys
+    mode = sys.argv[1] if len(sys.argv) > 1 else "day9"
+    if mode == "day8":
+        day8_index_all_models()
+    else:
+        day9_index_all_strategies()
