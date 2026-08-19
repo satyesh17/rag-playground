@@ -9,6 +9,7 @@ Uses HuggingFace's Wikipedia snapshot. Why Wikipedia:
 We take a small subset (~500 articles) for fast experimentation.
 Production RAG would index millions.
 """
+
 from pathlib import Path
 
 from datasets import load_dataset
@@ -48,14 +49,17 @@ def load_wikipedia_subset(
         if len(text) < 500 or "may refer to:" in text[:200].lower():
             continue
 
-        records.append({
-            "id": str(article["id"]),
-            "title": article["title"],
-            "text": text,
-        })
+        records.append(
+            {
+                "id": str(article["id"]),
+                "title": article["title"],
+                "text": text,
+            }
+        )
 
     # Save as JSONL for easy inspection
     import json
+
     with output_path.open("w") as f:
         for r in records:
             f.write(json.dumps(r) + "\n")

@@ -9,6 +9,7 @@ Metrics:
 - Median query latency
 - Average chunk count returned in top-K (proxy for how "spread" the retrieval is)
 """
+
 import json
 import time
 from dataclasses import dataclass, field
@@ -18,8 +19,7 @@ from statistics import median
 from src.rag_playground.chunker import CHUNKING_STRATEGIES
 from src.rag_playground.db import get_client
 from src.rag_playground.golden_set import GoldenEntry, load_golden_set
-from src.rag_playground.indexer import EMBEDDING_MODELS, load_model
-
+from src.rag_playground.indexer import load_model
 
 K_VALUES = [1, 3, 5, 10]
 
@@ -72,23 +72,22 @@ def evaluate_strategy(
             hit = any(t in entry.expected_doc_titles for t in top_k_titles)
             hits_at_k[k] = hit
 
-        results.append(QueryResult(
-            question=entry.question,
-            expected=entry.expected_doc_titles,
-            retrieved_titles=retrieved_titles,
-            latency_ms=latency_ms,
-            hits_at_k=hits_at_k,
-        ))
+        results.append(
+            QueryResult(
+                question=entry.question,
+                expected=entry.expected_doc_titles,
+                retrieved_titles=retrieved_titles,
+                latency_ms=latency_ms,
+                hits_at_k=hits_at_k,
+            )
+        )
 
         marker = "✓" if hits_at_k[1] else "✗"
         top1 = retrieved_titles[0] if retrieved_titles else "(none)"
         print(f"  {marker} [{latency_ms:5.1f}ms] Q: {entry.question[:50]}")
         print(f"         Top-1: {top1}")
 
-    recall_at_k = {
-        k: sum(1 for r in results if r.hits_at_k[k]) / len(results)
-        for k in K_VALUES
-    }
+    recall_at_k = {k: sum(1 for r in results if r.hits_at_k[k]) / len(results) for k in K_VALUES}
     latencies = [r.latency_ms for r in results]
 
     summary = {

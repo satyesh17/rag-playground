@@ -14,9 +14,14 @@ build/
 .env*
 
 # Data
+# Corpus files are large and reproducible — don't commit
 data/*.jsonl
 data/*.parquet
 data/downloaded/
+# Raw per-question eval results can be large — don't commit
+data/eval_runs/*_raw.json
+# BUT metrics summaries are small and needed by CI gate — DO commit
+!data/eval_runs/*_metrics.json
 
 # Qdrant local storage
 qdrant_storage/

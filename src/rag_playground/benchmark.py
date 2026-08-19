@@ -14,6 +14,7 @@ Metrics:
 Higher recall = better retrieval. Lower latency = faster serving.
 The tradeoff is the whole point of this benchmark.
 """
+
 import json
 import time
 from dataclasses import dataclass, field
@@ -24,7 +25,6 @@ from src.rag_playground.db import get_client
 from src.rag_playground.golden_set import GoldenEntry, load_golden_set
 from src.rag_playground.indexer import EMBEDDING_MODELS, load_model
 
-
 K_VALUES = [1, 3, 5, 10]
 
 
@@ -32,7 +32,7 @@ K_VALUES = [1, 3, 5, 10]
 class QueryResult:
     question: str
     expected: list[str]
-    retrieved_titles: list[str]      # Top-10 doc titles retrieved
+    retrieved_titles: list[str]  # Top-10 doc titles retrieved
     latency_ms: float
     hits_at_k: dict[int, bool] = field(default_factory=dict)
 
@@ -77,13 +77,15 @@ def evaluate_model(model_key: str, golden: list[GoldenEntry]) -> dict:
             hit = any(t in entry.expected_doc_titles for t in top_k_titles)
             hits_at_k[k] = hit
 
-        results.append(QueryResult(
-            question=entry.question,
-            expected=entry.expected_doc_titles,
-            retrieved_titles=retrieved_titles,
-            latency_ms=latency_ms,
-            hits_at_k=hits_at_k,
-        ))
+        results.append(
+            QueryResult(
+                question=entry.question,
+                expected=entry.expected_doc_titles,
+                retrieved_titles=retrieved_titles,
+                latency_ms=latency_ms,
+                hits_at_k=hits_at_k,
+            )
+        )
 
         # Print per-question result for transparency
         top1 = retrieved_titles[0] if retrieved_titles else "(none)"

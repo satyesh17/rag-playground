@@ -1,0 +1,20 @@
+{
+  "approach": "hybrid",
+  "n_questions": 14,
+  "recall_at_k": {
+    "1": 0.7142857142857143,
+    "3": 0.7142857142857143,
+    "5": 0.7857142857142857,
+    "10": 1.0
+  },
+  "median_latency_ms": 68.15579195972532,
+  "p95_latency_ms": 78.52608407847583,
+  "per_category_recall_at_1": {
+    "semantic_drift": 0.5,
+    "lexical_only": 0.6666666666666666,
+    "multihop": 0.6666666666666666,
+    "temporal": 1.0,
+    "negation": 1.0,
+    "indirect_role": 0.5
+  }
+}

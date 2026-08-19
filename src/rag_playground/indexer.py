@@ -11,6 +11,7 @@ Collections are named to reflect what's inside:
 - "day9_fixed" / "day9_recursive" / "day9_sentence" / "day9_paragraph"
   — Day 9 collections, MiniLM model, varying chunking
 """
+
 import uuid
 from dataclasses import asdict
 
@@ -20,7 +21,6 @@ from tqdm import tqdm
 
 from src.rag_playground.chunker import Chunk
 from src.rag_playground.db import get_client
-
 
 # Day 8 config — kept for backward compat
 EMBEDDING_MODELS = {
@@ -67,7 +67,7 @@ def index_chunks_into(
     client = get_client()
 
     for i in tqdm(range(0, len(chunks), batch_size), desc=f"Indexing {collection_name}"):
-        batch = chunks[i:i + batch_size]
+        batch = chunks[i : i + batch_size]
         texts = [c.text for c in batch]
 
         vectors = model.encode(
@@ -78,11 +78,13 @@ def index_chunks_into(
 
         points = []
         for chunk, vector in zip(batch, vectors, strict=True):
-            points.append(PointStruct(
-                id=str(uuid.uuid5(uuid.NAMESPACE_URL, chunk.chunk_id)),
-                vector=vector.tolist(),
-                payload=asdict(chunk),
-            ))
+            points.append(
+                PointStruct(
+                    id=str(uuid.uuid5(uuid.NAMESPACE_URL, chunk.chunk_id)),
+                    vector=vector.tolist(),
+                    payload=asdict(chunk),
+                )
+            )
 
         client.upsert(collection_name=collection_name, points=points)
 
@@ -94,9 +96,11 @@ def index_chunks_into(
 # DAY 8 MODE — index full corpus with each model, fixed chunking
 # ============================================================================
 
+
 def day8_index_all_models() -> None:
     """Day 8 flow: full corpus, fixed chunking, two models."""
     import json
+
     from src.rag_playground.chunker import chunk_corpus_with_strategy
 
     with open("data/corpus.jsonl") as f:
@@ -116,11 +120,16 @@ def day8_index_all_models() -> None:
 # DAY 9 MODE — sample corpus, MiniLM, four chunking strategies
 # ============================================================================
 
+
 def day9_index_all_strategies(n_articles: int = 10000) -> None:
     """Day 9 flow: sample of corpus, MiniLM, all 4 chunking strategies."""
     import json
     import random
-    from src.rag_playground.chunker import chunk_corpus_with_strategy, CHUNKING_STRATEGIES
+
+    from src.rag_playground.chunker import (
+        CHUNKING_STRATEGIES,
+        chunk_corpus_with_strategy,
+    )
 
     with open("data/corpus.jsonl") as f:
         records = [json.loads(line) for line in f]
@@ -144,6 +153,7 @@ def day9_index_all_strategies(n_articles: int = 10000) -> None:
 
 if __name__ == "__main__":
     import sys
+
     mode = sys.argv[1] if len(sys.argv) > 1 else "day9"
     if mode == "day8":
         day8_index_all_models()

@@ -10,3 +10,4 @@ tqdm>=4.66.0
 
 # Testing (dev, but keep here for simplicity)
 pytest>=8.0
+pyyaml>=6.0

@@ -4,17 +4,19 @@ Text chunking strategies for RAG.
 Today: fixed-size chunking (baseline).
 Day 9 will add: recursive, semantic, document-aware.
 """
+
 from dataclasses import dataclass
 
 
 @dataclass
 class Chunk:
     """A chunk of text with metadata linking back to its source."""
-    chunk_id: str          # Unique ID for this chunk
-    doc_id: str            # ID of the source document
-    doc_title: str         # Human-readable source name
-    text: str              # The chunk text itself
-    chunk_index: int       # Position within the source document (0, 1, 2, ...)
+
+    chunk_id: str  # Unique ID for this chunk
+    doc_id: str  # ID of the source document
+    doc_title: str  # Human-readable source name
+    text: str  # The chunk text itself
+    chunk_index: int  # Position within the source document (0, 1, 2, ...)
 
 
 def fixed_size_chunks(
@@ -46,13 +48,15 @@ def fixed_size_chunks(
         end = start + chunk_size
         chunk_text = text[start:end]
 
-        chunks.append(Chunk(
-            chunk_id=f"{doc_id}::chunk_{idx}",
-            doc_id=doc_id,
-            doc_title=doc_title,
-            text=chunk_text,
-            chunk_index=idx,
-        ))
+        chunks.append(
+            Chunk(
+                chunk_id=f"{doc_id}::chunk_{idx}",
+                doc_id=doc_id,
+                doc_title=doc_title,
+                text=chunk_text,
+                chunk_index=idx,
+            )
+        )
 
         start += step
         idx += 1
@@ -72,21 +76,24 @@ def chunk_corpus(
     """Apply fixed_size_chunks to every document in a corpus."""
     all_chunks = []
     for r in records:
-        all_chunks.extend(fixed_size_chunks(
-            doc_id=r["id"],
-            doc_title=r["title"],
-            text=r["text"],
-            chunk_size=chunk_size,
-            overlap=overlap,
-        ))
+        all_chunks.extend(
+            fixed_size_chunks(
+                doc_id=r["id"],
+                doc_title=r["title"],
+                text=r["text"],
+                chunk_size=chunk_size,
+                overlap=overlap,
+            )
+        )
     return all_chunks
 
 
 if __name__ == "__main__":
     # Quick smoke test
-    from src.rag_playground.data_loader import load_wikipedia_subset
     import json
     from pathlib import Path
+
+    from src.rag_playground.data_loader import load_wikipedia_subset
 
     # Reuse existing corpus if it exists
     if Path("data/corpus.jsonl").exists():
@@ -109,6 +116,7 @@ if __name__ == "__main__":
 # ============================================================================
 # NEW CHUNKERS (Day 9)
 # ============================================================================
+
 
 def recursive_chunks(
     doc_id: str,
@@ -153,7 +161,7 @@ def recursive_chunks(
                         # If this single part is bigger than chunk_size,
                         # recurse with finer separators
                         if len(part) > chunk_size:
-                            result.extend(_split_recursive(part, seps[seps.index(sep) + 1:]))
+                            result.extend(_split_recursive(part, seps[seps.index(sep) + 1 :]))
                             current = ""
                         else:
                             current = part
@@ -162,7 +170,7 @@ def recursive_chunks(
                 return result
 
         # No separator worked — hard-split by chunk_size
-        return [text[i:i + chunk_size] for i in range(0, len(text), chunk_size)]
+        return [text[i : i + chunk_size] for i in range(0, len(text), chunk_size)]
 
     raw_chunks = _split_recursive(text, separators)
 
@@ -173,13 +181,15 @@ def recursive_chunks(
             prev_tail = raw_chunks[idx - 1][-overlap:]
             chunk_text = prev_tail + chunk_text
 
-        chunks.append(Chunk(
-            chunk_id=f"{doc_id}::rec_{idx}",
-            doc_id=doc_id,
-            doc_title=doc_title,
-            text=chunk_text,
-            chunk_index=idx,
-        ))
+        chunks.append(
+            Chunk(
+                chunk_id=f"{doc_id}::rec_{idx}",
+                doc_id=doc_id,
+                doc_title=doc_title,
+                text=chunk_text,
+                chunk_index=idx,
+            )
+        )
 
     return chunks
 
@@ -207,7 +217,8 @@ def sentence_chunks(
     # Naive sentence splitting — good enough for prose.
     # Production would use nltk.sent_tokenize or spaCy.
     import re
-    sentences = re.split(r'(?<=[.!?])\s+', text)
+
+    sentences = re.split(r"(?<=[.!?])\s+", text)
     sentences = [s.strip() for s in sentences if s.strip()]
 
     chunks = []
@@ -218,13 +229,15 @@ def sentence_chunks(
         end = min(start + max_sentences, len(sentences))
         chunk_text = " ".join(sentences[start:end])
 
-        chunks.append(Chunk(
-            chunk_id=f"{doc_id}::sent_{idx}",
-            doc_id=doc_id,
-            doc_title=doc_title,
-            text=chunk_text,
-            chunk_index=idx,
-        ))
+        chunks.append(
+            Chunk(
+                chunk_id=f"{doc_id}::sent_{idx}",
+                doc_id=doc_id,
+                doc_title=doc_title,
+                text=chunk_text,
+                chunk_index=idx,
+            )
+        )
         idx += 1
 
         if end >= len(sentences):
@@ -253,15 +266,17 @@ def paragraph_chunks(
 
     chunks = []
     for idx, i in enumerate(range(0, len(paragraphs), max_paragraphs)):
-        chunk_text = "\n\n".join(paragraphs[i:i + max_paragraphs])
+        chunk_text = "\n\n".join(paragraphs[i : i + max_paragraphs])
 
-        chunks.append(Chunk(
-            chunk_id=f"{doc_id}::para_{idx}",
-            doc_id=doc_id,
-            doc_title=doc_title,
-            text=chunk_text,
-            chunk_index=idx,
-        ))
+        chunks.append(
+            Chunk(
+                chunk_id=f"{doc_id}::para_{idx}",
+                doc_id=doc_id,
+                doc_title=doc_title,
+                text=chunk_text,
+                chunk_index=idx,
+            )
+        )
 
     return chunks
 
@@ -309,12 +324,14 @@ def chunk_corpus_with_strategy(
 
     all_chunks = []
     for r in records:
-        all_chunks.extend(func(
-            doc_id=r["id"],
-            doc_title=r["title"],
-            text=r["text"],
-            **kwargs,
-        ))
+        all_chunks.extend(
+            func(
+                doc_id=r["id"],
+                doc_title=r["title"],
+                text=r["text"],
+                **kwargs,
+            )
+        )
 
     if apply_clamping:
         all_chunks = clamp_chunks(all_chunks, min_chars=100, max_chars=1500)
@@ -325,6 +342,7 @@ def chunk_corpus_with_strategy(
 # ============================================================================
 # SIZE CLAMPING (Day 9 fix — real-world chunk hygiene)
 # ============================================================================
+
 
 def clamp_chunks(
     chunks: list[Chunk],
@@ -354,30 +372,34 @@ def clamp_chunks(
 
         # Chunks within bounds pass through unchanged
         if len(text) <= max_chars:
-            result.append(Chunk(
-                chunk_id=chunk.chunk_id,
-                doc_id=chunk.doc_id,
-                doc_title=chunk.doc_title,
-                text=text,
-                chunk_index=chunk.chunk_index,
-            ))
+            result.append(
+                Chunk(
+                    chunk_id=chunk.chunk_id,
+                    doc_id=chunk.doc_id,
+                    doc_title=chunk.doc_title,
+                    text=text,
+                    chunk_index=chunk.chunk_index,
+                )
+            )
             continue
 
         # Oversized chunks: hard-split at max_chars boundaries
         piece_idx = 0
         pos = 0
         while pos < len(text):
-            piece_text = text[pos:pos + max_chars]
+            piece_text = text[pos : pos + max_chars]
 
             # Only keep pieces that meet min_chars (last piece can be small)
             if len(piece_text) >= min_chars:
-                result.append(Chunk(
-                    chunk_id=f"{chunk.chunk_id}_p{piece_idx}",
-                    doc_id=chunk.doc_id,
-                    doc_title=chunk.doc_title,
-                    text=piece_text,
-                    chunk_index=chunk.chunk_index,
-                ))
+                result.append(
+                    Chunk(
+                        chunk_id=f"{chunk.chunk_id}_p{piece_idx}",
+                        doc_id=chunk.doc_id,
+                        doc_title=chunk.doc_title,
+                        text=piece_text,
+                        chunk_index=chunk.chunk_index,
+                    )
+                )
                 piece_idx += 1
 
             pos += max_chars

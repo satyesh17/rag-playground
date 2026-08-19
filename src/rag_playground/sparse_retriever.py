@@ -15,10 +15,12 @@ Trade-offs vs dense:
 - Loses on paraphrases and semantic reasoning
 - Zero embedding cost — pure text math
 """
+
 import re
 from dataclasses import dataclass
 
 from rank_bm25 import BM25Okapi
+
 from src.rag_playground.db import get_client
 
 
@@ -33,7 +35,7 @@ class SparseResult:
 
 def _tokenize(text: str) -> list[str]:
     """Simple tokenization: lowercase, split on non-word chars."""
-    return re.findall(r'\w+', text.lower())
+    return re.findall(r"\w+", text.lower())
 
 
 class BM25Retriever:
@@ -54,7 +56,7 @@ class BM25Retriever:
                 limit=1000,
                 offset=offset,
                 with_payload=True,
-                with_vectors=False,   # Don't need vectors for sparse
+                with_vectors=False,  # Don't need vectors for sparse
             )
             all_chunks.extend(batch)
             if offset is None:
@@ -66,7 +68,7 @@ class BM25Retriever:
 
         print(f"  Building BM25 index over {len(tokenized_corpus)} chunks...")
         self.bm25 = BM25Okapi(tokenized_corpus)
-        print(f"  Done.")
+        print("  Done.")
 
     def retrieve(self, query: str, top_k: int = 10) -> list[SparseResult]:
         """Return top-K chunks scored by BM25."""
@@ -83,13 +85,15 @@ class BM25Retriever:
         results = []
         for idx in top_indices:
             p = self.payloads[idx]
-            results.append(SparseResult(
-                chunk_id=p["chunk_id"],
-                doc_id=p["doc_id"],
-                doc_title=p["doc_title"],
-                text=p["text"],
-                score=float(scores[idx]),
-            ))
+            results.append(
+                SparseResult(
+                    chunk_id=p["chunk_id"],
+                    doc_id=p["doc_id"],
+                    doc_title=p["doc_title"],
+                    text=p["text"],
+                    score=float(scores[idx]),
+                )
+            )
         return results
 
 

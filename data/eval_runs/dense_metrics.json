@@ -1,0 +1,20 @@
+{
+  "approach": "dense",
+  "n_questions": 14,
+  "recall_at_k": {
+    "1": 0.5,
+    "3": 0.6428571428571429,
+    "5": 0.7857142857142857,
+    "10": 0.8571428571428571
+  },
+  "median_latency_ms": 20.891417050734162,
+  "p95_latency_ms": 266.13545790314674,
+  "per_category_recall_at_1": {
+    "semantic_drift": 0.5,
+    "lexical_only": 0.3333333333333333,
+    "multihop": 0.3333333333333333,
+    "temporal": 1.0,
+    "negation": 0.5,
+    "indirect_role": 0.5
+  }
+}

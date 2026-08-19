@@ -20,6 +20,7 @@ Question categories intentionally varied:
 
 This tests whether the models generalize across question styles.
 """
+
 from dataclasses import dataclass
 
 
@@ -27,7 +28,7 @@ from dataclasses import dataclass
 class GoldenEntry:
     question: str
     expected_doc_titles: list[str]
-    category: str = ""   # For error analysis later
+    category: str = ""  # For error analysis later
 
 
 GOLDEN_QUESTIONS = [

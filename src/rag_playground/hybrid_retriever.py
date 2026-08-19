@@ -17,6 +17,7 @@ Trade-offs:
 - Can't weight one retriever over another
 - Simpler alternatives (weighted sum) can outperform when scores are well-calibrated
 """
+
 from dataclasses import dataclass
 
 from sentence_transformers import SentenceTransformer
@@ -32,8 +33,8 @@ class HybridResult:
     doc_title: str
     text: str
     rrf_score: float
-    dense_rank: int | None    # None if not retrieved by dense
-    sparse_rank: int | None   # None if not retrieved by BM25
+    dense_rank: int | None  # None if not retrieved by dense
+    sparse_rank: int | None  # None if not retrieved by BM25
 
 
 class HybridRetriever:
@@ -107,15 +108,17 @@ class HybridRetriever:
         results = []
         for chunk_id in top_ids:
             payload = chunk_data[chunk_id]
-            results.append(HybridResult(
-                chunk_id=chunk_id,
-                doc_id=payload["doc_id"],
-                doc_title=payload["doc_title"],
-                text=payload["text"],
-                rrf_score=rrf_scores[chunk_id],
-                dense_rank=dense_ranks.get(chunk_id),
-                sparse_rank=sparse_ranks.get(chunk_id),
-            ))
+            results.append(
+                HybridResult(
+                    chunk_id=chunk_id,
+                    doc_id=payload["doc_id"],
+                    doc_title=payload["doc_title"],
+                    text=payload["text"],
+                    rrf_score=rrf_scores[chunk_id],
+                    dense_rank=dense_ranks.get(chunk_id),
+                    sparse_rank=sparse_ranks.get(chunk_id),
+                )
+            )
         return results
 
 
@@ -125,7 +128,7 @@ if __name__ == "__main__":
     retriever = HybridRetriever("day9_fixed", model)
 
     test_queries = [
-        "What does the acronym TAI stand for in metrology?",     # BM25 should win
+        "What does the acronym TAI stand for in metrology?",  # BM25 should win
         "Which conflict of the 1860s reshaped American federalism?",  # Dense should win
         "Who founded the school of thought based on syllogistic logic?",  # Both miss?
     ]

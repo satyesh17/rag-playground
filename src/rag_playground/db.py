@@ -8,6 +8,7 @@ to Qdrant. Centralizing the connection here means:
 2. One place to switch to remote Qdrant later
 3. Consistent client instance across the codebase
 """
+
 from qdrant_client import QdrantClient
 
 

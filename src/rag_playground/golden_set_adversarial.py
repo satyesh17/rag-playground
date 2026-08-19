@@ -15,6 +15,7 @@ Categories designed to fail specific retrieval mechanisms:
 If any category doesn't actually degrade the baseline, we drop those questions
 and replace with harder ones. Empirical selection.
 """
+
 from dataclasses import dataclass
 
 
@@ -34,7 +35,6 @@ ADVERSARIAL_QUESTIONS = [
         category="semantic_drift",
         notes="Query mentions Aristotle explicitly — should pull his article, but answer is about student",
     ),
-
     # LEXICAL_ONLY — exact-term matches where semantics don't help
     GoldenEntry(
         question="What does the acronym TAI stand for in metrology?",
@@ -54,7 +54,6 @@ ADVERSARIAL_QUESTIONS = [
         category="lexical_only",
         notes="Formula string might fail on dense; BM25 should nail exact match",
     ),
-
     # MULTIHOP — requires linking articles
     GoldenEntry(
         question="Which philosopher's work influenced the school that Aristotle later founded in Athens?",
@@ -68,7 +67,6 @@ ADVERSARIAL_QUESTIONS = [
         category="multihop",
         notes="Birthplace of philosophy → Athens → democracy; requires two hops",
     ),
-
     # TEMPORAL — date/period disambiguation
     GoldenEntry(
         question="Which conflict of the 1860s reshaped American federalism?",
@@ -82,7 +80,6 @@ ADVERSARIAL_QUESTIONS = [
         category="temporal",
         notes="4th century BCE + conqueror + Hellenistic; multiple attractors possible",
     ),
-
     # NEGATION — comparison and exclusion
     GoldenEntry(
         question="Unlike pure metals, what property makes mixtures of metallic elements industrially useful?",
@@ -96,7 +93,6 @@ ADVERSARIAL_QUESTIONS = [
         category="negation",
         notes="Defined by what it's NOT — dense retrieval often trips on this",
     ),
-
     # INDIRECT_ROLE — entity by role, not identity
     GoldenEntry(
         question="Which chess player defeated Boris Spassky's challenger in the 1970s title match?",
@@ -110,7 +106,6 @@ ADVERSARIAL_QUESTIONS = [
         category="indirect_role",
         notes="Doubleday by role; 'national pastime' = baseball, not stated",
     ),
-
     # TRICKY MULTIHOP
     GoldenEntry(
         question="What is the SI unit named after the French mathematician who studied electromagnetism?",
@@ -134,11 +129,12 @@ def load_adversarial_golden_set() -> list[GoldenEntry]:
 if __name__ == "__main__":
     entries = load_adversarial_golden_set()
     from collections import Counter
+
     print(f"Adversarial golden set: {len(entries)} questions")
     cats = Counter(e.category for e in entries)
-    print(f"\nCategory breakdown:")
+    print("\nCategory breakdown:")
     for cat, count in cats.most_common():
         print(f"  {cat:16s}: {count}")
-    print(f"\nSamples:")
+    print("\nSamples:")
     for i, e in enumerate(entries[:5], 1):
         print(f"  {i}. [{e.category:16s}] {e.question}")

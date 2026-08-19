@@ -10,6 +10,7 @@ Question types:
 - Multi-hop: answer requires connecting information across the article
 - Analogical: describes what the concept IS without naming it
 """
+
 from dataclasses import dataclass
 
 

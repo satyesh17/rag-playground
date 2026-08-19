@@ -1,0 +1,45 @@
+# Eval gate thresholds
+#
+# Design principles:
+# - Set slightly BELOW current performance (not equal), so normal
+#   run-to-run noise doesn't cause flaky failures
+# - Focus on R@5 as primary gate — matches what LLMs typically use as context
+# - R@1 is a stretch metric, tracked but not blocking (harder to hold steady)
+# - Per-category floors catch specific failure modes (e.g., BM25 removal
+#   would tank lexical_only recall)
+#
+# Update these when a real quality improvement lands.
+# Never update to "hide" a real regression.
+
+# Baseline metrics from Day 10 (adversarial set, 14 questions)
+# Current: dense R@5=0.79, hybrid R@5=0.79, hybrid_rerank R@5=0.93
+
+# Global thresholds — every approach must meet these
+global:
+  min_recall_at_5: 0.70    # Below current 0.79; catches ~15% regression
+  min_recall_at_10: 0.80   # Below current 0.93/0.80
+
+# Per-approach specific thresholds
+approaches:
+  dense:
+    min_recall_at_5: 0.70
+    min_recall_at_10: 0.75
+
+  hybrid:
+    min_recall_at_5: 0.75
+    min_recall_at_10: 0.85
+
+  hybrid_rerank:
+    min_recall_at_5: 0.85    # Rerank should meaningfully improve R@5
+    min_recall_at_10: 0.95
+
+# Per-category floors — catches specific breakages
+# If lexical_only R@1 drops to 0 for hybrid, BM25 is broken
+per_category_r1_floor:
+  lexical_only: 0.30       # BM25 is critical here
+  # NOTE: temporal floor is 0.50 because reranker regresses temporal queries
+  # (see BENCHMARK.md Day 10 — cross-encoder scores topical overlap over
+  # temporal reasoning). Dense and hybrid both score 1.00; reranker scores
+  # 0.50. Set to 0.50 to reflect this known behavior. Investigate raising
+  # in Day 13 (agentic RAG with query rewriting).
+  temporal: 0.50

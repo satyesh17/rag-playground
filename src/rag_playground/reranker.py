@@ -23,6 +23,7 @@ forward pass per doc). So the production pattern is:
   1. Retrieve top-K with bi-encoders/BM25 (fast, imperfect)
   2. Rerank top-K with cross-encoder (slow, precise)
 """
+
 from dataclasses import dataclass
 
 from sentence_transformers import CrossEncoder
@@ -51,7 +52,7 @@ class CrossEncoderReranker:
     def rerank(
         self,
         query: str,
-        candidates: list,   # list of objects with .text, .chunk_id, .doc_id, .doc_title
+        candidates: list,  # list of objects with .text, .chunk_id, .doc_id, .doc_title
         top_k: int = 10,
     ) -> list[RerankedResult]:
         """
@@ -75,21 +76,24 @@ class CrossEncoderReranker:
 
         results = []
         for new_rank, (original_rank, (candidate, score)) in enumerate(indexed[:top_k], start=1):
-            results.append(RerankedResult(
-                chunk_id=candidate.chunk_id,
-                doc_id=candidate.doc_id,
-                doc_title=candidate.doc_title,
-                text=candidate.text,
-                original_rank=original_rank + 1,
-                reranker_score=float(score),
-                reranked_rank=new_rank,
-            ))
+            results.append(
+                RerankedResult(
+                    chunk_id=candidate.chunk_id,
+                    doc_id=candidate.doc_id,
+                    doc_title=candidate.doc_title,
+                    text=candidate.text,
+                    original_rank=original_rank + 1,
+                    reranker_score=float(score),
+                    reranked_rank=new_rank,
+                )
+            )
         return results
 
 
 if __name__ == "__main__":
     # Smoke test — rerank hybrid retrieval results
     from sentence_transformers import SentenceTransformer
+
     from src.rag_playground.hybrid_retriever import HybridRetriever
 
     model = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
@@ -107,4 +111,6 @@ if __name__ == "__main__":
     reranked = reranker.rerank(query, hybrid_results, top_k=5)
     print("\nAfter reranking (top-5):")
     for r in reranked:
-        print(f"  rerank_score={r.reranker_score:+.3f} | orig_rank={r.original_rank:2d} → new_rank={r.reranked_rank} | {r.doc_title}")
+        print(
+            f"  rerank_score={r.reranker_score:+.3f} | orig_rank={r.original_rank:2d} → new_rank={r.reranked_rank} | {r.doc_title}"
+        )

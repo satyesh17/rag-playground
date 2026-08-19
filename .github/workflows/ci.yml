@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  lint:
+    name: Lint & format check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Install dev tools
+        run: pip install ruff
+      - name: Ruff lint
+        run: ruff check src/ scripts/ tests/
+      - name: Ruff format check
+        run: ruff format --check src/ scripts/ tests/
+
+  test:
+    name: Unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Install project + test deps
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest
+      - name: Run tests
+        run: pytest tests/ -v
+
+  eval-gate:
+    name: Eval threshold gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Install pyyaml
+        run: pip install pyyaml
+      - name: Verify eval metrics files exist
+        run: |
+          if [ ! -d "data/eval_runs" ]; then
+            echo "::error::data/eval_runs/ missing. Run 'python -m src.rag_playground.eval_runner' locally and commit the *_metrics.json files."
+            exit 1
+          fi
+          ls -la data/eval_runs/
+      - name: Run eval threshold gate
+        run: python scripts/check_eval_thresholds.py
