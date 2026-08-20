@@ -212,3 +212,45 @@ The story of Day 10 is not "reranking wins." It's:
 2. Reranking's benefit is at K=3+, not K=1
 3. Both retrieval and rerank optimize topical similarity; when questions require answer-containment reasoning, both fail together
 4. That failure mode is why agentic RAG exists
+
+---
+
+# Day 11 — Eval Gate In CI
+
+## What Shipped
+
+A GitHub Actions workflow that automatically blocks PRs whose retrieval quality regresses below configured thresholds.
+
+**Three CI jobs:**
+- Lint & format (ruff)
+- Unit tests (pytest — 5 module-level import checks)
+- Eval threshold gate (reads committed metrics, exits non-zero on threshold violation)
+
+**Threshold design:**
+- Global floors on R@5 and R@10 (catches broad regressions)
+- Per-approach floors (dense, hybrid, hybrid_rerank each held to their own bar)
+- Per-category floors on R@1 (catches category-specific regressions hidden in aggregate)
+
+**Gate mechanics:**
+- Fast: reads committed `data/eval_runs/*_metrics.json` rather than re-running the full pipeline
+- Contributor responsibility: when retrieval code changes, run evals locally and commit updated metrics — PR shows both code and metric diffs
+
+## Verification (Chaos Test)
+
+After building the gate, deliberately regressed `hybrid_rerank_metrics.json`:
+- R@5: 0.93 → 0.60 (below approach floor 0.85 and global floor 0.70)
+- R@10: 1.00 → 0.70 (below approach floor 0.95 and global floor 0.80)
+
+Pushed as a PR. CI eval-gate job correctly failed with 4 threshold violations. PR unmergeable until metrics restored.
+
+**This verification matters.** A CI gate that always passes is worse than no gate — false confidence in a check that doesn't check. Real production teams verify every new gate by proving it blocks. Half the CI gates in most codebases don't actually gate anything; nobody tested them.
+
+## Deferred: LLM-Judged Metrics
+
+Attempted RAGAS 0.4.3 for context_recall, faithfulness, and answer_relevancy. Library is currently broken — hard-imports a langchain_community module that no longer exists in current versions. Documented in TECHDEBT.md.
+
+The recall@K metric is a strong proxy for retrieval quality. LLM-judged metrics matter more once we add answer generation to the pipeline (Day 13 agentic RAG).
+
+## Content
+
+Real production RAG lesson from Day 11: after building a CI gate, verify it actually blocks. Deliberately regress a metric, push, confirm CI turns red. If the chaos test also passes, your gate is theater. This discipline catches broken checks before they hide real regressions.
